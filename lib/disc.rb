@@ -5,6 +5,17 @@ require 'discourse_api'
 
 module Disc
 
+  class << self
+    attr_accessor :api_key, :api_username, :api_url
+  end
+
+  def self.client
+    @client ||= ::DiscourseApi::Client.new(@api_url).tap do |client|
+      client.api_key = @api_key
+      client.api_username = @api_username
+    end
+  end
+
   class DiscObject
     include Enumerable
 
