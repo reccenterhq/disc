@@ -1,5 +1,10 @@
 require "disc/version"
+
 require 'disc/util'
+require 'disc/disc_object'
+require 'disc/topic_list'
+require 'disc/topic'
+require 'disc/user'
 
 require 'discourse_api'
 
@@ -16,31 +21,4 @@ module Disc
     end
   end
 
-  class DiscObject
-    include Enumerable
-
-    def initialize(values)
-      @values = values
-      values.each do |k, v|
-        @values[k] = Util.convert_to_disc_object(v, key: k)
-      end
-    end
-
-    def [](k)
-      @values[k.to_s]
-    end
-
-    def method_missing(name, *args)
-      @values[name.to_s] if @values.has_key?(name.to_s)
-    end
-  end
-
-  class TopicList < DiscObject
-  end
-
-  class User < DiscObject
-  end
-
-  class Topic < DiscObject
-  end
 end

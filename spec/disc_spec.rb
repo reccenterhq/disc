@@ -13,4 +13,3 @@ describe Disc do
     expect(subject.client).to be_instance_of DiscourseApi::Client
   end
 end
-end
