@@ -15,4 +15,28 @@ describe Disc::TopicList do
     expect(subject.users.first).to be_a Disc::User
   end
 
+  context "api requests" do
+    subject { described_class }
+
+    before do
+      Disc.api_url = "http://localhost:3000"
+      Disc.api_key = "key"
+      Disc.api_username = "username"
+
+      stub_get("http://localhost:3000/latest.json?api_key=key&api_username=username").to_return(
+        body: fixture("latest.json"),
+        headers: { content_type: "application/json" })
+    end
+
+    it "requests the correct resource" do
+      subject.latest
+      expect(a_get("http://localhost:3000/latest.json?api_key=key&api_username=username")).to have_been_made
+    end
+
+    it "returns the requested topics" do
+      response = subject.latest
+      expect(response).to be_a Disc::TopicList
+      expect(response.first).to be_a Disc::Topic
+    end
+  end
 end
