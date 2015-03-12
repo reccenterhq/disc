@@ -1,8 +1,7 @@
 module Disc
   class TopicList < DiscObject
+    root :topic_list
+    list :topics
 
-    def each(&blk)
-      topics.each(&blk)
-    end
   end
 end

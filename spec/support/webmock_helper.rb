@@ -39,3 +39,7 @@ end
 def fixture(file)
   File.new(fixture_path + '/' + file)
 end
+
+def json_for(file)
+  JSON.parse(fixture(file).read)
+end
