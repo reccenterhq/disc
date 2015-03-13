@@ -6,16 +6,14 @@ module Disc
       @root = value
     end
 
-    def root
-      self.class.instance_variable_get(:@root)
-    end
-
     def self.list(value)
       @list = value
     end
 
-    def list
-      self.class.instance_variable_get(:@list)
+    def self.inherited(subclass)
+      subclass.instance_variable_set(:@root, @root)
+      subclass.instance_variable_set(:@list, @list)
+      super
     end
 
     def initialize(values)
@@ -23,6 +21,14 @@ module Disc
       @values.each do |k, v|
         @values[k] = Util.convert_to_disc_object(v, key: k)
       end
+    end
+
+    def list
+      self.class.instance_variable_get(:@list)
+    end
+
+    def root
+      self.class.instance_variable_get(:@root)
     end
 
     def [](k)
