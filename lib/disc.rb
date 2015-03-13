@@ -21,4 +21,7 @@ module Disc
     end
   end
 
+  def self.request(method, endpoint)
+    response = self.client.send(method, endpoint)
+  end
 end
