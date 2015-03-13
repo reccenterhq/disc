@@ -12,7 +12,7 @@ describe Disc::Util do
 
   it "converts a hash by named key" do
     object = {'id' => 1}
-    response = subject.convert_to_disc_object(object, key: 'users')
+    response = subject.convert_to_disc_object(object, key: :users)
     expect(response).to be_a Disc::User
   end
 
@@ -34,6 +34,30 @@ describe Disc::Util do
     response = subject.convert_to_disc_object(object)
     expect(response).to be_a Disc::DiscObject
     expect(response.foobars.first).to be_a Disc::DiscObject
+  end
+
+  it "symbolize_names should convert names to symbols" do
+    start = {
+      'foo' => 'bar',
+      'array' => [{ 'foo' => 'bar' }],
+      'nested' => {
+        1 => 2,
+        :symbol => 9,
+        'string' => nil
+      }
+    }
+    finish = {
+      :foo => 'bar',
+      :array => [{ :foo => 'bar' }],
+      :nested => {
+        1 => 2,
+        :symbol => 9,
+        :string => nil
+      }
+    }
+
+    symbolized = Disc::Util.symbolize_names(start)
+    expect(symbolized).to eq finish
   end
 end
 

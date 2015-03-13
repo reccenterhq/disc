@@ -19,26 +19,46 @@ module Disc
     end
 
     def initialize(values)
-      @values = values
-      values.each do |k, v|
+      @values = Util.symbolize_names(values)
+      @values.each do |k, v|
         @values[k] = Util.convert_to_disc_object(v, key: k)
       end
     end
 
     def [](k)
-      @values[k.to_s]
+      @values[k.to_sym]
     end
 
     def each(&blk)
       if root && list
-        @values[root.to_s][list.to_s].each(&blk)
+        @values[root.to_sym][list.to_sym].each(&blk)
       else
         @values.each(&blk)
       end
     end
 
     def method_missing(name, *args)
-      @values[name.to_s] if @values.has_key?(name.to_s)
+      @values[name.to_sym] if @values.has_key?(name.to_sym)
+    end
+
+    def to_s(*args)
+      JSON.pretty_generate(@values)
+    end
+
+    def inspect
+      id_string = (self.respond_to?(:id) && !self.id.nil?) ? " id=#{self.id}" : ""
+      "#<#{self.class}:0x#{self.object_id.to_s(16)}#{id_string}> JSON: " + JSON.pretty_generate(@values)
+    end
+
+    def to_json(*a)
+      JSON.generate(@values)
+    end
+
+    def to_hash
+      @values.inject({}) do |acc, (key, value)|
+        acc[key] = value.respond_to?(:to_hash) ? value.to_hash : value
+        acc
+      end
     end
 
   end
