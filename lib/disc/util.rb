@@ -4,7 +4,10 @@ module Disc
       @object_classes ||= {
         users: User,
         topic_list: TopicList,
-        topics: Topic
+        topics: Topic,
+        post_stream: PostStream,
+        posts: Post,
+        thumbnail: Thumbnail
       }
     end
 

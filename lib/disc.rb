@@ -4,7 +4,10 @@ require 'disc/util'
 require 'disc/disc_object'
 require 'disc/topic_list'
 require 'disc/topic'
+require 'disc/post_stream'
+require 'disc/post'
 require 'disc/user'
+require 'disc/thumbnail'
 
 require 'discourse_api'
 
