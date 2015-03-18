@@ -32,4 +32,24 @@ describe Disc::Topic do
     end
   end
 
+  context "failing api request" do
+    subject { described_class }
+
+    before do
+      Disc.api_url = "http://localhost:3000"
+      Disc.api_key = "key"
+      Disc.api_username = "username"
+
+      stub_get("http://localhost:3000/t/bad_id.json?api_key=key&api_username=username").to_return(
+        status: 404,
+        headers: { content_type: "application/json" },
+      )
+    end
+
+    it "raises a not found exception" do
+      expect { subject.find("bad_id") }.to raise_error Disc::NotFound
+      expect(a_get("http://localhost:3000/t/bad_id.json?api_key=key&api_username=username")).to have_been_made
+    end
+  end
+
 end

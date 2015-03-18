@@ -12,6 +12,7 @@ require 'disc/thumbnail'
 require 'discourse_api'
 
 module Disc
+  class NotFound < StandardError; end
 
   class << self
     attr_accessor :api_key, :api_username, :api_url
@@ -26,5 +27,7 @@ module Disc
 
   def self.request(method, endpoint)
     response = self.client.send(method, endpoint)
+    raise NotFound if response.status == 404
+    response
   end
 end
