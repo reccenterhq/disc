@@ -15,10 +15,6 @@ describe Disc::TopicList do
     expect(subject.users.first).to be_a Disc::User
   end
 
-  it 'returns values' do
-    expect(subject.values[0]).to be_a Disc::Topic
-  end
-
   context "api requests" do
     subject { described_class }
 

@@ -36,14 +36,10 @@ module Disc
     end
 
     def each(&blk)
-      values.each(&blk)
-    end
-
-    def values
       if root && list
-        @values[root.to_sym][list.to_sym]
+        @values[root.to_sym][list.to_sym].each(&blk)
       else
-        @values
+        @values.each(&blk)
       end
     end
 
