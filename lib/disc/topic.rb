@@ -7,6 +7,5 @@ module Disc
       response = Disc.request(:get, "/t/#{id}.json")
       self.new(response[:body])
     end
-
   end
 end

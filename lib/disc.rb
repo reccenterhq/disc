@@ -25,8 +25,8 @@ module Disc
     end
   end
 
-  def self.request(method, endpoint)
-    response = self.client.send(method, endpoint)
+  def self.request(method, endpoint, params={})
+    response = self.client.send(method, endpoint, params)
     raise NotFound if response.status == 404
     response
   end
