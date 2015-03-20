@@ -9,7 +9,7 @@ module Disc
     end
 
     def self.latest_for_category(slug, params={})
-      response = Disc.request(:get, "/category/#{slug}/l/latest.json", params)
+      response = Disc.request(:get, "/c/#{slug}/l/latest.json", params)
       self.new(response[:body])
     end
   end
